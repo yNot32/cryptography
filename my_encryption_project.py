@@ -5,11 +5,11 @@ import os
 
 def generate_key():
     """Генерация случайного ключа."""
-    return os.urandom(32)  # 32 байта для AES-256
+    return os.urandom(32)  
 
 def encrypt(plaintext, key):
     """Шифрование текста с использованием AES в режиме CBC."""
-    iv = os.urandom(16)  # Вектор инициализации
+    iv = os.urandom(16)  
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
     encryptor = cipher.encryptor()
     
@@ -18,7 +18,7 @@ def encrypt(plaintext, key):
     padded_data = padder.update(plaintext) + padder.finalize()
     
     ciphertext = encryptor.update(padded_data) + encryptor.finalize()
-    return iv + ciphertext  # Возвращаем IV вместе с зашифрованными данными
+    return iv + ciphertext 
 
 def decrypt(ciphertext, key):
     """Расшифрование текста с использованием AES в режиме CBC."""
@@ -26,7 +26,7 @@ def decrypt(ciphertext, key):
     actual_ciphertext = ciphertext[16:]
     
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
-    decryptor = cipher.decryptor()  # Исправлено имя переменной
+    decryptor = cipher.decryptor() 
 
     padded_data = decryptor.update(actual_ciphertext) + decryptor.finalize()
 
